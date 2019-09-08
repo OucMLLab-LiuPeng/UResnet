@@ -8,4 +8,4 @@ CycleGan is used to generate paired images to train UResnet.
 # Requirements
 - Linux (code have not been tested on Windows or OSX)
 - NVIDIA GPU + CUDA CuDNN
-- pytorch >= 0.4.0
+- pytorch >= 0.4.1
