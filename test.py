@@ -23,7 +23,7 @@ def test(config):
 	tsfm_lst = [transforms.ToTensor()]
 	tsfm = transforms.Compose(tsfm_lst)
 
-	testset = TestDataSet(config.test_path,tsfm)
+	testset = TestDataSet(config.test_pth,tsfm)
 	test_dataloader = torch.utils.data.DataLoader(testset,batch_size = config.batch_size,shuffle = False)
 
 	for i,(img,name) in enumerate(test_dataloader):
@@ -38,7 +38,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--cuda_id', type=int, default=0,help='default:0')
 	parser.add_argument('--snapshot_pth',type=str,default=None,help='snapshot path,such as :xxx/snapshots/model.ckpt default:None')
-	parser.add_argument('--test_path',type=str,default='./data/test/',help='path of test images. default:./data/test/ ')
+	parser.add_argument('--test_pth',type=str,default='./data/test/',help='path of test images. default:./data/test/ ')
 	parser.add_argument('--batch_size',type=int,default=1)
 	parser.add_argument('--output_pth',type=str,default='./results/',help='path to save generated image. default:./results/')
 
