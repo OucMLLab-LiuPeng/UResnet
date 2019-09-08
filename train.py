@@ -13,11 +13,8 @@ from model import Edge_Detector,Res_Block,UResNet_P
 import argparse
 from dataloader import TrainDataSet
 
-
 def train(config):
-
 	device = torch.device("cuda:" + str(config.cuda_id))
-
 	model = UResNet_P().to(device)
 	for param in model.edge_detector.parameters():
 	    param.requires_grad=False
@@ -37,14 +34,9 @@ def train(config):
 	# 	scheduler = lr_scheduler.StepLR(optimizer,step_size=2*config.step_size,gamma=config.decay_rate)
 
 	transform_list = [transforms.Resize((config.resize,config.resize)),transforms.ToTensor()] 
-
-
-
 	tsfms = transforms.Compose(transform_list)
-
 	train_dataset = TrainDataSet(config.input_images_path,config.label_images_path,tsfms)
-	train_dataloader = torch.utils.data.DataLoader(train_dataset,batch_size = config.batch_size,shuffle = False)
-	
+	train_dataloader = torch.utils.data.DataLoader(train_dataset,batch_size = config.batch_size,shuffle = False)	
 	img_loss_lst = []
 	edge_loss_lst = []
 	total_loss_lst = []
@@ -55,7 +47,6 @@ def train(config):
 		if epoch>1 and epoch % config.step_size == 0:
 			for param_group in optimizer.param_groups:
 				param_group['lr']=param_group['lr']*0.7
-
 
 		for input_img,label_img in train_dataloader:
 			input_img = input_img.to(device)
@@ -68,7 +59,6 @@ def train(config):
 				img_loss_tmp.append(loss.item())
 				loss.backward()
 				optimizer.step()
-
 
 			if config.train_mode == 'P-A':
 
@@ -94,8 +84,6 @@ def train(config):
 				total_loss_tmp.append(loss.item())
 				loss.backward()
 
-
-
 		if config.train_mode == 'N':
 			img_loss_lst.append(np.mean(img_loss_tmp))
 		
@@ -105,7 +93,6 @@ def train(config):
 		if config.train_mode == 'P-A':
 			img_loss_lst.append(np.mean(img_loss_tmp))
 			edge_loss_lst.append(np.mean(edge_loss_tmp))
-
 
 		if epoch % config.print_feq == 0:
 			if config.train_mode == 'N' :			
@@ -117,8 +104,6 @@ def train(config):
 
 		if epoch % config.snapshot_iter == 0:
 			torch.save(model, config.snapshots_folder + 'model_epoch_{}.ckpt'.format(epoch))
-
-
 
 if __name__ == "__main__":
 
