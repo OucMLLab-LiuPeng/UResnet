@@ -46,7 +46,7 @@ def train(config):
 		total_loss_tmp = []
 		if epoch>1 and epoch % config.step_size == 0:
 			for param_group in optimizer.param_groups:
-				param_group['lr']=param_group['lr']*0.7
+				param_group['lr'] = param_group['lr']*0.7
 
 		for input_img,label_img in train_dataloader:
 			input_img = input_img.to(device)
@@ -94,7 +94,7 @@ def train(config):
 			img_loss_lst.append(np.mean(img_loss_tmp))
 			edge_loss_lst.append(np.mean(edge_loss_tmp))
 
-		if epoch % config.print_feq == 0:
+		if epoch % config.print_freq == 0:
 			if config.train_mode == 'N' :			
 				print('epoch:[{}]/[{}], image loss:{}'.format(epoch,config.num_epochs,str(img_loss_lst[epoch])))
 			if config.train_mode == 'P-A':
@@ -102,7 +102,7 @@ def train(config):
 			if config.train_mode == 'P-S':
 				print('epoch:[{}]/[{}], total loss:{}'.format(epoch,config.num_epochs,str(total_loss_lst[epoch])))
 
-		if epoch % config.snapshot_iter == 0:
+		if epoch % config.snapshot_freq == 0:
 			torch.save(model, config.snapshots_folder + 'model_epoch_{}.ckpt'.format(epoch))
 
 if __name__ == "__main__":
@@ -121,9 +121,8 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', type=int, default=1,help="default : 1")
     parser.add_argument('--resize', type=int, default=256,help="resize images, default:resize images to 256*256")
     parser.add_argument('--cuda_id', type=int, default=0,help="id of cuda device,default:0")
-    parser.add_argument('--display_iter', type=int, default=10)
-    parser.add_argument('--print_feq', type=int, default=1)    
-    parser.add_argument('--snapshot_iter', type=int, default=50)
+    parser.add_argument('--print_freq', type=int, default=1)    
+    parser.add_argument('--snapshot_freq', type=int, default=50)
     parser.add_argument('--snapshots_folder', type=str, default="./snapshots/")
     # parser.add_argument('--sample_output_folder', type=str, default="samples/")
 
