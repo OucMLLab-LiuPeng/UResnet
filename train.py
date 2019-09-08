@@ -101,6 +101,8 @@ def train(config):
 				print('epoch:[{}]/[{}], image loss:{},edge difference loss:{}'.format(epoch,config.num_epochs,str(img_loss_lst[epoch]),str(edge_loss_lst[epoch])))
 			if config.train_mode == 'P-S':
 				print('epoch:[{}]/[{}], total loss:{}'.format(epoch,config.num_epochs,str(total_loss_lst[epoch])))
+		if not os.path.exists(config.snapshots_folder):
+			os.mkdir(config.snapshots_folder)
 
 		if epoch % config.snapshot_freq == 0:
 			torch.save(model, config.snapshots_folder + 'model_epoch_{}.ckpt'.format(epoch))
