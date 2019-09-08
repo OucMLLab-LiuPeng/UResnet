@@ -1,6 +1,6 @@
 # UResnet
-Underwater Image Enhancement.
-This project use CycleGan to generate paired images to train a CNN,which takes underwater images and generates enhanced images.
+A method to to underwater image enhancement.  
+CycleGan is used to generate paired images to train UResnet.
 # Samples of Training Set
 ![trainset](/images/trainingset.jpg)
 # Samples of Model Outputs
