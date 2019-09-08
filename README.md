@@ -12,3 +12,7 @@ CycleGan is used to generate paired images to train UResnet.
 # Train model
 use python train.py --input_images_path xxx/path/to/input/ --label_images_path xxx/path/to/label --snapshots_folder xxx/path/to/save/snapshot  
 use python train.py -h to choose more usable options
+# Dataset
+The training set should be organized like  
+**Input image: xxx/path/input/abcd.jpg Label image: xxx/path/label/abcd_label.jpg**  
+ 
